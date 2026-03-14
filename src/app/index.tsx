@@ -1,98 +1,66 @@
 import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
+import { Button, Card, Chip } from 'heroui-native';
+import { Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text } from 'react-native';
 
 import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
 import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
 
 function getDevMenuHint() {
   if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
+    return 'use browser devtools';
   }
   if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
+    return 'shake device or press m in terminal';
   }
   const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
+  return `press ${shortcut}`;
 }
 
 export default function HomeScreen() {
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
+    <View className="flex-1 justify-center flex-row bg-background">
+      <SafeAreaView className="flex-1 items-center gap-4 px-6 pb-24 max-w-xl">
+        <View className="items-center justify-center flex-1 px-6 gap-6">
           <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+          <Text className="text-5xl font-semibold text-center text-foreground">
+            Welcome to{'\u00A0'}Expo
+          </Text>
+        </View>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+        <Chip variant="secondary" size="sm">
+          <Chip.Label className="uppercase">get started</Chip.Label>
+        </Chip>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+        <Card variant="secondary" className="self-stretch">
+          <Card.Body className="gap-4">
+            <View className="flex-row justify-between items-center">
+              <Card.Title>Try editing</Card.Title>
+              <Chip variant="tertiary" size="sm">src/app/index.tsx</Chip>
+            </View>
+            <View className="flex-row justify-between items-center">
+              <Card.Title>Dev tools</Card.Title>
+              <Card.Description>{getDevMenuHint()}</Card.Description>
+            </View>
+            <View className="flex-row justify-between items-center">
+              <Card.Title>Fresh start</Card.Title>
+              <Chip variant="tertiary" size="sm">npm run reset-project</Chip>
+            </View>
+          </Card.Body>
+        </Card>
+
+        <Button
+          variant="primary"
+          size="lg"
+          className="self-stretch"
+          onPress={() => console.log('Get started!')}
+        >
+          Get Started
+        </Button>
 
         {Platform.OS === 'web' && <WebBadge />}
       </SafeAreaView>
-    </ThemedView>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
-});
