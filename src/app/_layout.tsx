@@ -1,22 +1,14 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import '@/global.css';
 import { HeroUINativeProvider } from 'heroui-native';
-import React from 'react';
-import { useColorScheme } from 'react-native';
+import { Slot } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <HeroUINativeProvider>
-          <AnimatedSplashOverlay />
-          <AppTabs />
-        </HeroUINativeProvider>
-      </ThemeProvider>
+      <HeroUINativeProvider>
+        <Slot />
+      </HeroUINativeProvider>
     </GestureHandlerRootView>
   );
 }

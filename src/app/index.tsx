@@ -1,65 +1,30 @@
-import * as Device from 'expo-device';
 import { Button, Card, Chip } from 'heroui-native';
-import { Platform } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text } from 'react-native';
-
-import { AnimatedIcon } from '@/components/animated-icon';
-import { WebBadge } from '@/components/web-badge';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return 'use browser devtools';
-  }
-  if (Device.isDevice) {
-    return 'shake device or press m in terminal';
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return `press ${shortcut}`;
-}
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   return (
-    <View className="flex-1 justify-center flex-row bg-background">
-      <SafeAreaView className="flex-1 items-center gap-4 px-6 pb-24 max-w-xl">
-        <View className="items-center justify-center flex-1 px-6 gap-6">
-          <AnimatedIcon />
-          <Text className="text-5xl font-semibold text-center text-foreground">
-            Welcome to{'\u00A0'}Expo
-          </Text>
-        </View>
-
-        <Chip variant="secondary" size="sm">
-          <Chip.Label className="uppercase">get started</Chip.Label>
-        </Chip>
+    <View className="flex-1 bg-background">
+      <SafeAreaView className="flex-1 items-center justify-center gap-6 px-6">
+        <Text className="text-3xl font-bold text-foreground">HeroUI Native</Text>
+        <Text className="text-base text-default-500">Verify integration is working</Text>
 
         <Card variant="secondary" className="self-stretch">
-          <Card.Body className="gap-4">
-            <View className="flex-row justify-between items-center">
-              <Card.Title>Try editing</Card.Title>
-              <Chip variant="tertiary" size="sm">src/app/index.tsx</Chip>
-            </View>
-            <View className="flex-row justify-between items-center">
-              <Card.Title>Dev tools</Card.Title>
-              <Card.Description>{getDevMenuHint()}</Card.Description>
-            </View>
-            <View className="flex-row justify-between items-center">
-              <Card.Title>Fresh start</Card.Title>
-              <Chip variant="tertiary" size="sm">npm run reset-project</Chip>
+          <Card.Body className="gap-3">
+            <Card.Title>Setup Checklist</Card.Title>
+            <View className="flex-row flex-wrap gap-2">
+              <Chip variant="primary" size="sm"><Chip.Label>Uniwind</Chip.Label></Chip>
+              <Chip variant="secondary" size="sm"><Chip.Label>Tailwind</Chip.Label></Chip>
+              <Chip variant="tertiary" size="sm"><Chip.Label>HeroUI</Chip.Label></Chip>
             </View>
           </Card.Body>
         </Card>
 
-        <Button
-          variant="primary"
-          size="lg"
-          className="self-stretch"
-          onPress={() => console.log('Get started!')}
-        >
-          Get Started
-        </Button>
-
-        {Platform.OS === 'web' && <WebBadge />}
+        <View className="self-stretch gap-3">
+          <Button variant="primary" onPress={() => console.log('primary')}>Primary Button</Button>
+          <Button variant="secondary" onPress={() => console.log('secondary')}>Secondary Button</Button>
+          <Button variant="tertiary" onPress={() => console.log('tertiary')}>Tertiary Button</Button>
+        </View>
       </SafeAreaView>
     </View>
   );
